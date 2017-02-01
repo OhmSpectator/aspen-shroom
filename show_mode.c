@@ -19,7 +19,7 @@ static void local_puts(const char*);
 static char local_getc(void);
 static void putcf_mock(void*, char);
 
-int show_mode(int argc, char* const argv[])
+int main(int argc, char* const argv[])
 {
     init_printf(0, putcf_mock);
 
