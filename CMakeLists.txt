@@ -47,4 +47,11 @@ set(SOURCE_FILES
         show_mode.c
         tinyprintf.c)
 
-add_executable(testing-standalone ${SOURCE_FILES})
+add_executable(test_elf ${SOURCE_FILES})
+
+add_custom_command(OUTPUT test_elf.bin
+        COMMAND ${TOOLCHAIN_PREFIX}objcopy --output-format=binary test_elf test.bin
+        DEPENDS test_elf
+        COMMENT "objcopying test_elf to test_elf.bin")
+
+add_custom_target(test_bin ALL DEPENDS test_elf.bin)
