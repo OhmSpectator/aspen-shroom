@@ -47,11 +47,19 @@ set(SOURCE_FILES
         show_mode.c
         tinyprintf.c)
 
-add_executable(test_elf ${SOURCE_FILES})
+add_executable(test.elf ${SOURCE_FILES})
 
-add_custom_command(OUTPUT test_elf.bin
-        COMMAND ${TOOLCHAIN_PREFIX}objcopy --output-format=binary test_elf test.bin
-        DEPENDS test_elf
-        COMMENT "objcopying test_elf to test_elf.bin")
+add_custom_command(
+        OUTPUT test.bin
+        COMMAND ${TOOLCHAIN_PREFIX}objcopy --output-format=binary test.elf test.bin
+        DEPENDS test.elf
+        COMMENT "creating .bin from elf file")
 
-add_custom_target(test_bin ALL DEPENDS test_elf.bin)
+add_custom_target(create-bin ALL DEPENDS test.bin)
+
+#set_target_properties( test.elf test.bin
+#        PROPERTIES
+#        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+#        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+#        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+#        )
