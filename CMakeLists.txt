@@ -36,6 +36,8 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mno-thumb-interwork")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mword-relocations")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mno-unaligned-access")
 
+set(CMAKE_ASM_COMPILER "${TOOLCHAIN_PREFIX}as")
+
 set(STANDALONE_START_ADDR 0x81000000)
 set(CMAKE_EXE_LINKER_FLAGS "")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Ttext ${STANDALONE_START_ADDR}")
@@ -45,6 +47,7 @@ set(CMAKE_C_LINK_EXECUTABLE "${TOOLCHAIN_PREFIX}ld.bfd ${CMAKE_EXE_LINKER_FLAGS}
 
 set(SOURCE_FILES
         show_mode.c
+        hyp_table.S
         lib/tinyprintf.c
         lib/serial_print.c)
 
