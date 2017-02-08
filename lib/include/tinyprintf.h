@@ -132,14 +132,13 @@ regs Kusti, 23.10.2004
 /* Declarations */
 
 #ifdef __GNUC__
-# define _TFP_SPECIFY_PRINTF_FMT(fmt_idx,arg1_idx) \
+# define _TFP_SPECIFY_PRINTF_FMT(fmt_idx, arg1_idx) \
     __attribute__((format (printf, fmt_idx, arg1_idx)))
 #else
 # define _TFP_SPECIFY_PRINTF_FMT(fmt_idx,arg1_idx)
 #endif
 
-
-typedef void (*putcf) (void *, char);
+typedef void (*putcf)(void *, char);
 
 /*
    'tfp_format' really is the central function for all tinyprintf. For

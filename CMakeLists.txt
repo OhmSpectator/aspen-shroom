@@ -5,7 +5,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 project(aspen_shroom C ASM)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 
-include_directories(.)
+include_directories(lib/include)
 
 set(TOOLCHAIN_PREFIX $ENV{CROSS_COMPILE})
 
@@ -45,7 +45,8 @@ set(CMAKE_C_LINK_EXECUTABLE "${TOOLCHAIN_PREFIX}ld.bfd ${CMAKE_EXE_LINKER_FLAGS}
 
 set(SOURCE_FILES
         show_mode.c
-        tinyprintf.c)
+        lib/tinyprintf.c
+        lib/serial_print.c)
 
 add_executable(test.elf ${SOURCE_FILES})
 
@@ -56,10 +57,3 @@ add_custom_command(
         COMMENT "creating .bin from elf file")
 
 add_custom_target(create-bin ALL DEPENDS test.bin)
-
-#set_target_properties( test.elf test.bin
-#        PROPERTIES
-#        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-#        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-#        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-#        )
