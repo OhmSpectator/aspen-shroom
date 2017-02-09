@@ -8,6 +8,8 @@
 #define UART_LSR_RDR_BIT    (1<<0)
 
 void init_print(void);
+void init_magic(void);
+void print_magic(void);
 
 char getc(void);
 void putc(char);

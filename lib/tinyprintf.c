@@ -433,10 +433,17 @@ void tfp_format(void *putp, putcf putf, const char *fmt, va_list va)
 static putcf stdout_putf;
 static void *stdout_putp;
 
+u_int32_t magic;
+
 void init_printf(void *putp, putcf putf)
 {
     stdout_putf = putf;
     stdout_putp = putp;
+}
+
+void _init_magic(void)
+{
+    magic = 0xDEADBEEF;
 }
 
 void tfp_printf(char *fmt, ...)

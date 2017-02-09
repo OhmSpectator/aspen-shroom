@@ -54,3 +54,17 @@ void init_print(void)
 {
     init_printf(0, putcf_mock);
 }
+
+/**
+ * Debug functions
+ */
+void init_magic(void)
+{
+    _init_magic();
+}
+
+void print_magic(void)
+{
+    extern u_int32_t magic;
+    printf("Magic: 0x%08X\n", magic);
+}
