@@ -78,7 +78,6 @@ int main(int argc, char* const argv[])
 
     printf("Press any button to switch to MON mode (via CPS)\n");
     (void) getc();
-    uint32_t proc_mode = MON_MODE;
     asm volatile(
         "mov r1, sp\n"
         "mov r2, lr\n"
@@ -86,7 +85,7 @@ int main(int argc, char* const argv[])
         "mov sp, r1\n"
         "mov lr, r2"
         :
-        : "I" (proc_mode)
+        : "I" (MON_MODE)
         : "r1", "r2", "cc", "memory"
     );
     printf("Done!\n");
@@ -105,14 +104,12 @@ int main(int argc, char* const argv[])
 
     printf("Press any button to set SCR.NS to 1\n");
     (void) getc();
-    uint32_t ns_bit = SCR_NS_BIT;
     asm volatile(
         "mrc p15, 0, r0, c1, c1, 0\n"
-        "ldr r1, %0\n"
-        "orr r0, r1\n"
+        "orr r0, %0\n"
         "mcr p15, 0, r0, c1, c1, 0"
         :
-        : "m" (ns_bit)
+        : "I" (SCR_NS_BIT)
         : "r0"
     );
     printf("Done!\n");
@@ -169,17 +166,12 @@ int main(int argc, char* const argv[])
 
     printf("Press any button to set SCR.HCE and SRC.SCD to 1\n");
     (void) getc();
-    uint32_t hce_bit = SCR_HCE_BIT;
-    uint32_t scd_bit = SCR_SCD_BIT;
     asm volatile(
         "mrc p15, 0, r0, c1, c1, 0\n"
-        "ldr r1, %0\n"
-        "orr r0, r1\n"
-        "ldr r1, %1\n"
-        "orr r0, r1\n"
+        "orr r0, %0\n"
         "mcr p15, 0, r0, c1, c1, 0"
         :
-        : "m" (hce_bit), "m"(scd_bit)
+        : "I" (SCR_HCE_BIT | SCR_SCD_BIT)
         : "r0"
     );
     printf("Done!\n");
