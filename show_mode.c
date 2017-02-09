@@ -22,7 +22,11 @@
 int main(int argc, char* const argv[])
 {
 
-    init_print ();
+    init_print();
+    print_magic();
+    init_magic();
+
+    print_magic();
 
     printf("Press any button to read ID_PFR1\n");
     (void) getc();
@@ -188,32 +192,29 @@ int main(int argc, char* const argv[])
     printf("SCR: 0x%08" PRIx32 "\n", scr_val);
     printf("Done!\n");
 
-#if 0
+    u_int32_t local_magic = 0xABADC0DE;
+    printf("Loacl magic: 0x%08X\n", local_magic);
+
     printf("Press any button to switch to SVC mode (via CPS)\n");
     (void) getc();
-    proc_mode = SVC_MODE;
     asm volatile(
         "mov r0, sp\n"
         "mov r1, lr\n"
+        "mrs r2, spsr\n"
         "cps %0\n"
+        "msr spsr, r2\n"
+        "isb\n"
         "mov sp, r0\n"
-        "mov lr, r1"
+        "mov lr, r1\n"
+        "dsb"
         :
-        : "I" (proc_mode)
+        : "I" (SVC_MODE)
         : "r0", "r1", "sp", "cc", "memory"
     );
+    init_print();
     printf("Done!\n");
-#endif
-
-    printf("Press any button to switch to SVC mode (via MOVS)\n");
-    (void) getc();
-    asm volatile(
-        "movs pc, lr"
-        :
-        :
-        :
-    );
-    printf("Done!\n");
+    print_magic();
+    printf("Loacl magic: 0x%08X\n", local_magic);
 
     printf("Press any button to read CPSR\n");
     (void) getc();
