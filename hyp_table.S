@@ -12,5 +12,5 @@ hyp_vectors:
 
 .global _hyp_handler
 _hyp_handler:
-    eret
+    mov pc, r1
 

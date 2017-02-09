@@ -239,11 +239,12 @@ int main(int argc, char* const argv[])
     (void) getc();
     asm volatile(
         "mov r0, sp\n"
+        "mov r1, pc\n"
         "hvc #0\n"
         "mov sp, r0\n"
         :
         :
-        : "r0"
+        : "r0", "r1"
     );
     printf("Done!\n");
 
