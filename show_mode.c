@@ -86,6 +86,7 @@ int main(int argc, char* const argv[])
         "mov r1, sp\n"
         "mov r2, lr\n"
         "cps %0\n"
+        "isb\n"
         "mov sp, r1\n"
         "mov lr, r2"
         :
@@ -111,7 +112,8 @@ int main(int argc, char* const argv[])
     asm volatile(
         "mrc p15, 0, r0, c1, c1, 0\n"
         "orr r0, %0\n"
-        "mcr p15, 0, r0, c1, c1, 0"
+        "mcr p15, 0, r0, c1, c1, 0\n"
+        "isb"
         :
         : "I" (SCR_NS_BIT)
         : "r0"
@@ -173,7 +175,8 @@ int main(int argc, char* const argv[])
     asm volatile(
         "mrc p15, 0, r0, c1, c1, 0\n"
         "orr r0, %0\n"
-        "mcr p15, 0, r0, c1, c1, 0"
+        "mcr p15, 0, r0, c1, c1, 0\n"
+        "isb"
         :
         : "I" (SCR_HCE_BIT | SCR_SCD_BIT)
         : "r0"
