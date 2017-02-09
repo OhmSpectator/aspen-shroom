@@ -196,7 +196,7 @@ int main(int argc, char* const argv[])
     printf("SCR: 0x%08" PRIx32 "\n", scr_val);
     printf("Done!\n");
 
-
+#if 0
     printf("Press any button to switch to SVC mode (via CPS)\n");
     (void) getc();
     proc_mode = SVC_MODE;
@@ -209,6 +209,17 @@ int main(int argc, char* const argv[])
         :
         : "I" (proc_mode)
         : "r0", "r1", "sp", "cc", "memory"
+    );
+    printf("Done!\n");
+#endif
+
+    printf("Press any button to switch to SVC mode (via MOVS)\n");
+    (void) getc();
+    asm volatile(
+        "movs pc, lr"
+        :
+        :
+        :
     );
     printf("Done!\n");
 
